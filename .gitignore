@@ -4,5 +4,6 @@
 # Editor
 *.code-workspace
 
-# Python
+# Project
 __pycache__
+.env
