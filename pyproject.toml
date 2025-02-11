@@ -4,7 +4,17 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = ["fastapi>=0.115.8", "uvicorn[standard]>=0.34.0"]
+dependencies = [
+    "aiomysql[rsa]>=0.2.0",
+    "asyncpg>=0.30.0",
+    "fastapi>=0.115.8",
+    "google-api-python-client>=2.160.0",
+    "google-auth>=2.38.0",
+    "google-auth-oauthlib>=1.2.1",
+    "passlib[bcrypt]>=1.7.4",
+    "python-jose[cryptography]>=3.3.0",
+    "uvicorn[standard]>=0.34.0",
+]
 
 [build-system]
 requires = ["hatchling"]
