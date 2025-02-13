@@ -21,9 +21,13 @@ class DataManager:
 
         await self._setup_per_data_manager()
 
+    async def close(self) -> None:
+        """データベースとの接続を終了します。"""
+        await self.db.close()
+
     async def _setup_per_data_manager(self) -> None:
-        async with self.db.acquire() as conn, conn.cursor() as cursor:
-            await self.user.setup(cursor)
+        async with self.db.acquire() as conn, conn.transaction():
+            await self.user.setup(conn)
 
 
 class UserDataManager:
@@ -47,8 +51,9 @@ class UserDataManager:
         row = await conn.fetchrow(
             "SELECT COUNT(*) FROM user_table WHERE email = $1 LIMIT 1;", email
         )
+        assert row is not None
 
-        return row is not None
+        return bool(row[0])
 
     async def create_user(self, email: str) -> None:
         """ユーザーを作成します。"""
@@ -56,6 +61,7 @@ class UserDataManager:
             if await self._exists_user(email, conn):
                 raise AlreadyCreatedError
             else:
+                print(email)
                 await conn.execute(
                     "INSERT INTO user_table VALUES ($1, NULL, NULL);", email
                 )
@@ -64,8 +70,10 @@ class UserDataManager:
         """ユーザーの情報を設定します。"""
         async with self.db.acquire() as conn, conn.transaction():
             await conn.execute(
-                "UPDATE user_table SET name = %s, bio = %s WHERE email = %s;",
-                (name, bio, email),
+                "UPDATE user_table SET name = $1, bio = $2 WHERE email = $3;",
+                name,
+                bio,
+                email,
             )
 
     async def get_user(self, email: str) -> User | None:
@@ -76,8 +84,7 @@ class UserDataManager:
             もしもユーザーが見つからなかった場合は、``None``が返却されます。"""
         async with self.db.acquire() as conn, conn.transaction():
             row = await conn.fetchrow(
-                "SELECT name, bio FROM user_table WHERE email = %s LIMIT = 1;",
-                (email,),
+                "SELECT name, bio FROM user_table WHERE email = $1 LIMIT 1;", email
             )
 
             if row:

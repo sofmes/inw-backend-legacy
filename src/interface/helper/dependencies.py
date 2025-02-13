@@ -2,7 +2,7 @@
 
 from typing import Annotated
 
-from fastapi import Depends, Header, HTTPException, Request
+from fastapi import Cookie, Depends, HTTPException, Request
 
 from domain.user import User
 from infrastructure.database import DataManager
@@ -16,13 +16,13 @@ def data(request: Request) -> DataManager:
 
 async def user(
     data: Annotated[DataManager, Depends(data)],
-    authorization: Annotated[str | None, Header()] = None,
+    session: Annotated[str | None, Cookie()] = None,
 ) -> User:
     """資格情報を元に、ログインしているユーザーの情報を取得する依存関係"""
-    if authorization is None:
+    if session is None:
         raise HTTPException(401, "資格情報を設定してください。")
 
-    email = auth.verify(authorization.replace("Bearer ", "", 1))
+    email = auth.verify(session)
     if email is None:
         raise HTTPException(401, "資格情報が不正です。")
 

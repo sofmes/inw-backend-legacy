@@ -1,13 +1,15 @@
-from os import getenv
-
 from google.auth import external_account_authorized_user
 from google.auth.transport import requests
 from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 
-from interface.helper.env import client_secrets_file, google_client_id, oauth_callback_url
+from interface.helper.env import (
+    client_secrets_file,
+    google_client_id,
+    oauth_callback_url,
+)
 
-SCOPES = ("https://www.googleapis.com/auth/userinfo.email",)
+SCOPES = "openid https://www.googleapis.com/auth/userinfo.email"
 
 
 def use_flow():
@@ -23,6 +25,7 @@ def fetch_email(state, url):
     flow = Flow.from_client_secrets_file(
         client_secrets_file, scopes=SCOPES, state=state
     )
+    flow.redirect_uri = oauth_callback_url
     flow.fetch_token(authorization_response=url)
 
     assert not isinstance(
