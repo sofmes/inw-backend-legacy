@@ -2,21 +2,21 @@
 
 from typing import Annotated
 
-from fastapi import Depends, FastAPI, Header, HTTPException
+from fastapi import Depends, Header, HTTPException, Request
 
 from domain.user import User
 from infrastructure.database import DataManager
 from interface.helper import auth
 
 
-def data(app: FastAPI) -> DataManager:
+def data(request: Request) -> DataManager:
     """データ管理の依存関係"""
-    return app.state.data
+    return request.app.state.data
 
 
 async def user(
+    data: Annotated[DataManager, Depends(data)],
     authorization: Annotated[str | None, Header()] = None,
-    data: DataManager = Depends(data),
 ) -> User:
     """資格情報を元に、ログインしているユーザーの情報を取得する依存関係"""
     if authorization is None:
