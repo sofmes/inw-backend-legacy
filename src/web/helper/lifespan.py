@@ -6,7 +6,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from infrastructure.database import DataManager
-from interface.helper.env import database_url
+from web.helper.env import database_url
 
 
 @asynccontextmanager

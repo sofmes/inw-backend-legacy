@@ -3,7 +3,7 @@ from google.auth.transport import requests
 from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 
-from interface.helper.env import (
+from web.helper.env import (
     client_secrets_file,
     google_client_id,
     oauth_callback_url,

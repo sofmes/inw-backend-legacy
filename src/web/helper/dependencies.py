@@ -6,7 +6,7 @@ from fastapi import Cookie, Depends, HTTPException, Request
 
 from domain.user import User
 from infrastructure.database import DataManager
-from interface.helper import auth
+from web.helper import auth
 
 
 def data(request: Request) -> DataManager:

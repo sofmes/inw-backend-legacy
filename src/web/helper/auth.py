@@ -5,7 +5,7 @@ from typing import Any
 
 from jose import JWTError, jwt
 
-from interface.helper.env import secret_key
+from web.helper.env import secret_key
 
 ALGORITHM = "HS256"
 

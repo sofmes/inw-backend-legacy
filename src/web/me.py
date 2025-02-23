@@ -5,7 +5,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 
 from domain.user import User
-from interface.helper.dependencies import user
+from web.helper.dependencies import user
 
 router = APIRouter(prefix="/me")
 

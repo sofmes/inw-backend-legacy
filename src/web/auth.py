@@ -5,10 +5,10 @@ from fastapi import APIRouter, Cookie, Depends, HTTPException, Request
 from fastapi.responses import RedirectResponse
 
 from infrastructure.database import DataManager
-from interface.helper import auth
-from interface.helper.dependencies import data
-from interface.helper.env import home_url
-from interface.helper.google import fetch_email, use_flow
+from web.helper import auth
+from web.helper.dependencies import data
+from web.helper.env import home_url
+from web.helper.google import fetch_email, use_flow
 
 router = APIRouter(prefix="/auth")
 logger = getLogger(__name__)

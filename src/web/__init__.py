@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 
-from interface.auth import router as auth_router
-from interface.helper.lifespan import lifespan
-from interface.me import router as me_router
+from web.auth import router as auth_router
+from web.helper.lifespan import lifespan
+from web.me import router as me_router
 
 app = FastAPI(lifespan=lifespan)
 
