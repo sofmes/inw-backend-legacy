@@ -367,6 +367,7 @@ dependencies = [
     { name = "google-auth" },
     { name = "google-auth-oauthlib" },
     { name = "passlib", extra = ["bcrypt"] },
+    { name = "python-dotenv" },
     { name = "python-jose", extra = ["cryptography"] },
     { name = "uvicorn", extra = ["standard"] },
 ]
@@ -380,6 +381,7 @@ requires-dist = [
     { name = "google-auth", specifier = ">=2.38.0" },
     { name = "google-auth-oauthlib", specifier = ">=1.2.1" },
     { name = "passlib", extras = ["bcrypt"], specifier = ">=1.7.4" },
+    { name = "python-dotenv", specifier = ">=1.0.1" },
     { name = "python-jose", extras = ["cryptography"], specifier = ">=3.3.0" },
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.34.0" },
 ]

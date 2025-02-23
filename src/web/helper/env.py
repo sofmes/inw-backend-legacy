@@ -2,6 +2,10 @@
 
 from os import getenv as _getenv
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 def getenv(key: str) -> str:
     temp = _getenv(key)
